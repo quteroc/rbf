@@ -93,22 +93,22 @@ class TDLambda_LVFA:
         if done:
             self.traces.fill(0)
             
-    def update_alpha_epsilon(self): # do not touch
+    def update_alpha_epsilon(self): 
         self.epsilon = max(self.final_epsilon, self.epsilon*self.epsilon_decay)
         self.alpha = self.alpha*self.alpha_decay
         
-    def policy(self, state): # do not touch
+    def policy(self, state): 
         state_feats = self.feature_encoder.encode(state)
         return self.Q(state_feats).argmax()
     
-    def epsilon_greedy(self, state, epsilon=None): # do not touch
+    def epsilon_greedy(self, state, epsilon=None):
         if epsilon is None: epsilon = self.epsilon
         if random.random()<epsilon:
             return self.env.action_space.sample()
         return self.policy(state)
        
         
-    def train(self, n_episodes=200, max_steps_per_episode=200): # do not touch
+    def train(self, n_episodes=200, max_steps_per_episode=200): 
         print(f'ep | eval | epsilon | alpha')
         for episode in range(n_episodes):
             done = False
@@ -129,7 +129,7 @@ class TDLambda_LVFA:
             if episode % 20 == 0:
                 print(episode, self.evaluate(), self.epsilon, self.alpha)
                 
-    def evaluate(self, env=None, n_episodes=10, max_steps_per_episode=200): # do not touch
+    def evaluate(self, env=None, n_episodes=10, max_steps_per_episode=200): 
         if env is None:
             env = self.env
             
